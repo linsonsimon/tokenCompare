@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <h1>hello world</h1>
+    <p id="stock-price"></p>
+  </body>
+  <script>
+    // var burl = "https://api.binance.com";
+    // var query = "/api/v3/ticker/price";
+
+    // var url = burl + query;
+
+    // var ourRequest = new XMLHttpRequest();
+
+    // ourRequest.open("GET", url, true);
+    // ourRequest.onLoad = function () {
+    //   console.log(ourRequest.responseText);
+    // };
+    // ourRequest.send();
+    let ws = new WebSocket("wss://stream.binance.com:9433/ws/etheur@trade");
+    let stockPriceElement = document.getElementById("stock-price");
+    ws.onmessage = (event) => {
+      let trade = JSON.parse(event.data);
+      console.log(trade.p);
+      stockPriceElement.innerText = trade.p;
+    };
+  </script>
+</html>
